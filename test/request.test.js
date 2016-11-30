@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var request = require('../lib/stub');
+var request = require('../lib/request');
 
 describe('stub test suite', function () {
   it('should create GET request', function () {
