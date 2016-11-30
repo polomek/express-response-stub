@@ -50,9 +50,8 @@ describe('stub test suite', function() {
 		var responses = stub.responses();
 
 		// then
-		expect(responses.length).to.equal(1);
-		expect(responses[0].code).to.equal(200);
-		expect(responses[0].body).to.equal('test response');
+		expect(responses["default"].code).to.equal(200);
+		expect(responses["default"].body).to.equal('test response');
 	});
 
 	it('should have multiple responses and have default response', function() {
@@ -71,17 +70,12 @@ describe('stub test suite', function() {
 		var responses = stub.responses();
 
 		// then
-		expect(responses.length).to.equal(3);
-		expect(responses[0].body).to.equal('');
-		expect(responses[0].code).to.equal(200);
-		expect(responses[0].which).to.equal(0);
-		expect(responses[0].isDefault()).to.be.true;
+		expect(responses["default"].body).to.equal('');
+		expect(responses["default"].code).to.equal(200);
 		expect(responses[1].body).to.equal('response 1');
 		expect(responses[1].code).to.equal(200);
-		expect(responses[1].which).to.equal(1);
 		expect(responses[2].body).to.equal('response 2');
 		expect(responses[2].code).to.equal(404);
-		expect(responses[2].which).to.equal(2);
 	});
 
 	it('should have aliases for first, second and third call', function() {
@@ -105,17 +99,33 @@ describe('stub test suite', function() {
 		var responses = stub.responses();
 
 		// then
-		expect(responses.length).to.equal(4);
-		expect(responses[0].body).to.equal('default response');
-		expect(responses[0].code).to.equal(200);
+		expect(responses["default"].body).to.equal('default response');
+		expect(responses["default"].code).to.equal(200);
 		expect(responses[1].body).to.equal('response 1');
 		expect(responses[1].code).to.equal(200);
-		expect(responses[1].which).to.equal(1);
 		expect(responses[2].body).to.equal('response 2');
 		expect(responses[2].code).to.equal(404);
-		expect(responses[2].which).to.equal(2);
 		expect(responses[3].body).to.equal('response 3');
 		expect(responses[3].code).to.equal(500);
-		expect(responses[3].which).to.equal(3);
+	});
+
+	it('should not create new behavior on subsequent call', function() {
+		// given
+		var stub = request.get('/api/info');
+
+		// when
+		stub
+			.onFirstCall()
+			.responseCode(404);
+
+		stub
+			.onFirstCall()
+			.responseBody('response 1');
+
+		var responses = stub.responses();
+
+		// then
+		expect(responses[1].body).to.equal('response 1');
+		expect(responses[1].code).to.equal(404);
 	});
 });
