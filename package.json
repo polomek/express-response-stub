@@ -1,7 +1,7 @@
 {
   "name": "express-response-stub",
   "version": "0.1.0",
-  "description": "",
+  "description": "Simple library for stubbing HTTP responses from express server.",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -9,7 +9,11 @@
   "scripts": {
     "test": "node_modules/.bin/mocha"
   },
-  "author": "",
+  "author": "Rafał Połomka <polomek@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/polomek/express-response-stub.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "chai": "^3.5.0",
