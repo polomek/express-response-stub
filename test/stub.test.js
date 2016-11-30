@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var request = require('../lib/stub').request;
+var request = require('../lib/stub');
 
 describe('stub test suite', function() {
 	it('should create GET request', function() {
@@ -45,13 +45,15 @@ describe('stub test suite', function() {
 		// when
 		stub
 			.responseBody('test response')
-			.responseCode(200);
+			.responseCode(200)
+			.responseDelay(500);
 
 		var responses = stub.responses();
 
 		// then
 		expect(responses["default"].code).to.equal(200);
 		expect(responses["default"].body).to.equal('test response');
+		expect(responses["default"].delay).to.equal(500);
 	});
 
 	it('should have multiple responses and have default response', function() {
