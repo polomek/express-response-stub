@@ -51,9 +51,9 @@ describe('stub test suite', function () {
     var responses = stub.responses();
 
     // then
-    expect(responses["default"].code).to.equal(200);
-    expect(responses["default"].body).to.equal('test response');
-    expect(responses["default"].delay).to.equal(500);
+    expect(responses['default'].code).to.equal(200);
+    expect(responses['default'].body).to.equal('test response');
+    expect(responses['default'].delay).to.equal(500);
   });
 
   it('should have multiple responses and have default response', function () {
@@ -72,8 +72,8 @@ describe('stub test suite', function () {
     var responses = stub.responses();
 
     // then
-    expect(responses["default"].body).to.equal('');
-    expect(responses["default"].code).to.equal(200);
+    expect(responses['default'].body).to.equal('');
+    expect(responses['default'].code).to.equal(200);
     expect(responses[1].body).to.equal('response 1');
     expect(responses[1].code).to.equal(200);
     expect(responses[2].body).to.equal('response 2');
@@ -101,8 +101,8 @@ describe('stub test suite', function () {
     var responses = stub.responses();
 
     // then
-    expect(responses["default"].body).to.equal('default response');
-    expect(responses["default"].code).to.equal(200);
+    expect(responses['default'].body).to.equal('default response');
+    expect(responses['default'].code).to.equal(200);
     expect(responses[1].body).to.equal('response 1');
     expect(responses[1].code).to.equal(200);
     expect(responses[2].body).to.equal('response 2');
@@ -129,5 +129,19 @@ describe('stub test suite', function () {
     // then
     expect(responses[1].body).to.equal('response 1');
     expect(responses[1].code).to.equal(404);
+  });
+
+  it('should set JSON flag to true', function () {
+    // given
+    var stub = request.get('/api/info');
+
+    // when
+    stub
+      .responseBody({'key':'value'});
+
+    var responses = stub.responses();
+
+    // then
+    expect(responses['default'].json).to.be.true;
   });
 });

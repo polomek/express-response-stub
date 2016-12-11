@@ -107,4 +107,23 @@ describe('wrapper test suite', function () {
       });
     });
   });
+
+  it('should respond with JSON body', function (done) {
+    // given
+    var stub = requestStub.get('/api/test');
+
+    stub
+      .responseBody({'message': 'test'});
+
+    appWrapper.addBehaviors(stub);
+
+    // when
+    request.get('http://localhost:9999/api/test', function (error, response, body) {
+
+      // then
+      expect(response.headers['content-type']).to.match(/application\/json/);
+      expect(JSON.parse(body)).to.deep.equal({'message': 'test'});
+      done();
+    });
+  });
 });
